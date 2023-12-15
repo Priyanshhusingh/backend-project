@@ -32,7 +32,7 @@ const UserSchema = new Schema(
       required: [true, "Password is Required"],
     },
     refreshToken: {
-      type: string,
+      type: String,
     },
   },
   { timestamps: true }
@@ -40,7 +40,7 @@ const UserSchema = new Schema(
 
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
-  this.password = bcrypt.hash(this.password, 10);
+  this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
@@ -69,4 +69,6 @@ UserSchema.methods.generateRefreshToken = function () {
     { expiresIn: process.env.REFRESH_TOKEN_EXPIRY }
   );
 };
-export const User = mongoose.model("User", UserSchema);
+
+const User = mongoose.model("User", UserSchema);
+module.exports = User;
