@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const scbscriptionSchema = new Schema(
   {
-    subsciber: {
+    subscriber: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
